@@ -70,7 +70,10 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        $input = $request->getParsedBody();
+        $post = $request->getParsedBody();
+        $files = $request->getUploadedFiles();
+
+        $input = array_merge($post, $files);
 
         $rules = $this->getRules();
         $labels = $this->getLabels();

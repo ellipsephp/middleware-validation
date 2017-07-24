@@ -1,6 +1,8 @@
 <?php
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
@@ -44,11 +46,16 @@ describe('AbstractValidationMiddleware', function () {
 
         beforeEach(function () {
 
-            $this->input = ['key' => 'value'];
+            $file = Mockery::mock(UploadedFileInterface::class);
 
-            $rules = ['key' => 'required'];
-            $labels = ['key' => 'field name'];
-            $templates = ['key' => 'field template'];
+            $this->post = ['key1' => 'value'];
+            $this->files = ['key2' => $file];
+
+            $this->input = ['key1' => 'value', 'key2' => $file];
+
+            $rules = ['key1' => 'required', 'key2' => 'required'];
+            $labels = ['key1' => 'field1 name', 'key2' => 'field2 name'];
+            $templates = ['key1' => 'field1 template', 'key2' => 'field2 template'];
 
             $validator1 = Mockery::mock(Validator::class);
             $validator2 = Mockery::mock(Validator::class);
@@ -58,7 +65,10 @@ describe('AbstractValidationMiddleware', function () {
             $this->result = Mockery::mock(ValidationResult::class);
 
             $this->request->shouldReceive('getParsedBody')->once()
-                ->andReturn($this->input);
+                ->andReturn($this->post);
+
+            $this->request->shouldReceive('getUploadedFiles')->once()
+                ->andReturn($this->files);
 
             $this->middleware->shouldReceive('getRules')->once()
                 ->andReturn($rules);
