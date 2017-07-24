@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Ellipse\Middleware\Validation;
+namespace Ellipse\Validation;
 
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -8,8 +8,7 @@ use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 
 use Ellipse\Validation\ValidatorFactory;
-
-use Ellipse\Middleware\Validation\Exceptions\DataInvalidException;
+use Ellipse\Validation\Exceptions\DataInvalidException;
 
 abstract class AbstractValidationMiddleware implements MiddlewareInterface
 {
@@ -66,7 +65,7 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
      * @param \Psr\Http\Message\ServerRequestInterface  $request
      * @param \Psr\Http\Message\DelegateInterface       $delegate
      * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Ellipse\Validator\Exceptions\DataInvalidException
+     * @throws \Ellipse\Validation\Exceptions\DataInvalidException
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {

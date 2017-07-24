@@ -7,12 +7,11 @@ use Psr\Http\Message\UploadedFileInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 
+use Ellipse\Validation\AbstractValidationMiddleware;
 use Ellipse\Validation\ValidatorFactory;
 use Ellipse\Validation\Validator;
 use Ellipse\Validation\ValidationResult;
-
-use Ellipse\Middleware\Validation\AbstractValidationMiddleware;
-use Ellipse\Middleware\Validation\Exceptions\DataInvalidException;
+use Ellipse\Validation\Exceptions\DataInvalidException;
 
 describe('AbstractValidationMiddleware', function () {
 
