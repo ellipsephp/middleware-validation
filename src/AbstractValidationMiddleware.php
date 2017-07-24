@@ -33,7 +33,7 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
     /**
      * Return an array of rules.
      *
-     * @return callable
+     * @return array
      */
     abstract public function getRules(): array;
 
