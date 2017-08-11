@@ -20,6 +20,31 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
     private $factory;
 
     /**
+     * Return a new AbstractValidationMiddleware.
+     *
+     * @param string $locale
+     * @return \Ellipse\Validation\AbstractValidationMiddleware
+     */
+    public static function create(string $locale = 'en'): AbstractValidationMiddleware
+    {
+        $factory = ValidatorFactory::create($locale);
+
+        return self::withFactory($factory);
+    }
+
+    /**
+     * Return a new AbstractValidationMiddleware using the given validator
+     * factory.
+     *
+     * @param \Ellipse\Validation\ValidatorFactory $factory
+     * @return \Ellipse\Validation\AbstractValidationMiddleware
+     */
+    public static function withFactory(ValidatorFactory $factory): AbstractValidationMiddleware
+    {
+        return new static($factory);
+    }
+
+    /**
      * Set up a validator middleware with a validator factory.
      *
      * @param \Ellipse\Validation\ValidatorFactory

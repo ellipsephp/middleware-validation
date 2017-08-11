@@ -13,6 +13,14 @@ use Ellipse\Validation\Validator;
 use Ellipse\Validation\ValidationResult;
 use Ellipse\Validation\Exceptions\DataInvalidException;
 
+class TestMiddleware extends AbstractValidationMiddleware
+{
+    public function getRules(): array
+    {
+        return [];
+    }
+}
+
 describe('AbstractValidationMiddleware', function () {
 
     beforeEach(function () {
@@ -38,6 +46,30 @@ describe('AbstractValidationMiddleware', function () {
     it('should implements MiddlewareInterface', function () {
 
         expect($this->middleware)->to->be->an->instanceof(MiddlewareInterface::class);
+
+    });
+
+    describe('::create()', function () {
+
+        it('should return a new AbstractValidationMiddleware', function () {
+
+            $test = TestMiddleware::create();
+
+            expect($test)->to->be->an->instanceof(AbstractValidationMiddleware::class);
+
+        });
+
+    });
+
+    describe('::withFactory()', function () {
+
+        it('should return a new AbstractValidationMiddleware', function () {
+
+            $test = TestMiddleware::withFactory($this->factory);
+
+            expect($test)->to->be->an->instanceof(AbstractValidationMiddleware::class);
+
+        });
 
     });
 
