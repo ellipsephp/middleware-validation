@@ -1,5 +1,5 @@
 {
-    "name": "ellipse/middleware-validation",
+    "name": "ellipse/validation-middleware",
     "type": "library",
     "description": "The validation middleware of the ellipse framework",
     "keywords": [
@@ -9,10 +9,10 @@
         "validator"
     ],
     "license": "MIT",
-    "homepage": "https://github.com/ellipsephp/middleware-validation",
+    "homepage": "https://github.com/ellipsephp/validation-middleware",
     "support": {
-        "issues": "https://github.com/ellipsephp/middleware-validation/issues",
-        "source": "https://github.com/ellipsephp/middleware-validation"
+        "issues": "https://github.com/ellipsephp/validation-middleware/issues",
+        "source": "https://github.com/ellipsephp/validation-middleware"
     },
     "authors": [
         {
