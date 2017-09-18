@@ -4,8 +4,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\Server\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 
 use Ellipse\Validation\AbstractValidationMiddleware;
 use Ellipse\Validation\ValidatorFactory;
@@ -27,7 +27,7 @@ describe('AbstractValidationMiddleware', function () {
 
         $this->request = Mockery::mock(ServerRequestInterface::class);
         $this->response = Mockery::mock(ResponseInterface::class);
-        $this->delegate = Mockery::mock(DelegateInterface::class);
+        $this->handler = Mockery::mock(RequestHandlerInterface::class);
 
         $this->factory = Mockery::mock(ValidatorFactory::class);
 
@@ -134,11 +134,11 @@ describe('AbstractValidationMiddleware', function () {
 
                 $this->result->shouldReceive('passed')->once()->andReturn(true);
 
-                $this->delegate->shouldReceive('process')->once()
+                $this->handler->shouldReceive('handle')->once()
                     ->with($this->request)
                     ->andReturn($this->response);
 
-                $test = $this->middleware->process($this->request, $this->delegate);
+                $test = $this->middleware->process($this->request, $this->handler);
 
                 expect($test)->to->be->equal($this->response);
 
@@ -160,7 +160,7 @@ describe('AbstractValidationMiddleware', function () {
                     'failed',
                 ]);
 
-                expect([$this->middleware, 'process'])->with($this->request, $this->delegate)
+                expect([$this->middleware, 'process'])->with($this->request, $this->handler)
                     ->to->throw(DataInvalidException::class);
 
             });

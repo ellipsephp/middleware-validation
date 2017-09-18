@@ -4,8 +4,8 @@ namespace Ellipse\Validation;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\Server\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 
 use Ellipse\Validation\ValidatorFactory;
 use Ellipse\Validation\Exceptions\DataInvalidException;
@@ -88,11 +88,11 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
      * those data to validate the request input.
      *
      * @param \Psr\Http\Message\ServerRequestInterface  $request
-     * @param \Psr\Http\Message\DelegateInterface       $delegate
+     * @param \Psr\Http\Message\RequestHandlerInterface $handler
      * @return \Psr\Http\Message\ResponseInterface
      * @throws \Ellipse\Validation\Exceptions\DataInvalidException
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
     {
         $post = $request->getParsedBody();
         $files = $request->getUploadedFiles();
@@ -111,7 +111,7 @@ abstract class AbstractValidationMiddleware implements MiddlewareInterface
 
         if ($result->passed()) {
 
-            return $delegate->process($request);
+            return $handler->handle($request);
 
         }
 
